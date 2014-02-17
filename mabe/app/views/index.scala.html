@@ -1,0 +1,37 @@
+@(title: String, posts: Seq[models.Post])(implicit request: play.api.mvc.RequestHeader)
+<!DOCTYPE html>
+<html>
+<head>
+<title>@title - MABE</title>
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+</head>
+<body class="index">
+
+@if(request.path != "/") {
+  <nav>
+    <a href="@routes.Application.index">Home</a>
+  </nav>
+}
+
+<header>
+<h1>@title</h1>
+</header>
+
+<section class="content">
+@for(post <- posts) {
+  <h2>
+    <a href="@routes.Application.post(post.slug)">@post.property("title")</a>
+    <span class="date">@post.property("date")</span>
+  </h2>
+  @if(post.properties.hasPath("summary")) {
+    @views.Helpers.markdown(post.properties.getString("summary"))
+  }
+}
+</section>
+
+<footer>
+  <p>MABE • Markdown Blog Engine • <a href="http://github.com/hilton/mabe">http://github.com/hilton/mabe</a></p>
+</footer>
+
+</body>
+</html>
