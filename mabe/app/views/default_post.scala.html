@@ -1,0 +1,45 @@
+@(categories:Seq[String], post: models.Post, content: Html)
+
+@import views.Helpers._
+
+@styles = {
+<link rel='stylesheet' media='screen' href='@routes.Assets.at("stylesheets/default.css")'>
+}
+
+@main(post.property("title").getOrElse(""), styles){
+
+<nav>
+    <a href="@routes.Application.index">Home</a>
+</nav>
+
+<header>
+    <h1>@post.property("title")</h1>
+</header>
+
+<section class="byline">
+    <p>
+        @List(post.property("author"), post.property("date")).flatten.mkString(" • ")
+        @post.properties.getString("tags").split(" ").map { tag =>
+        <a class="tag" href="@routes.Application.tagged(tag)">#@tag</a>
+        }
+    </p>
+</section>
+
+<section class="summary">
+    @if(post.properties.hasPath("summary")) {
+    @views.Helpers.markdown(post.properties.getString("summary"))
+    }
+</section>
+
+<section class="content">@content</section>
+
+@if(post.properties.hasPath("summary")) {
+<section class="signature">@views.Helpers.markdown(post.properties.getString("signature"))</section>
+}
+
+@include("footer.html")
+
+}
+
+</body>
+</html>

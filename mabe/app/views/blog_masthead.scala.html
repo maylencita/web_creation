@@ -1,0 +1,12 @@
+@(categories:Seq[String], activeCat:String)
+
+<div class="blog-masthead">
+    <div class="container">
+        <nav class="blog-nav">
+            <a class="blog-nav-item @if(activeCat.isEmpty){active}" href="/">Home</a>
+            @categories.map{cat =>
+                <a class="blog-nav-item @if(activeCat == cat){active}" href="/cat/@cat">@cat</a>
+            }
+        </nav>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+@(title:String, styles: Html = Html(""), scripts: Html = Html(""))(content:Html)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>@title</title>
+
+    <link rel="shortcut icon" href='@routes.Assets.at("ico/favicon.ico")'>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/bootstrap.min.css")'>
+    <!-- Site global CSS -->
+    <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main.css")'>
+    <!-- Specific page CSS -->
+    @styles
+</head>
+
+<body>
+
+@content
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<script src='@routes.Assets.at("javascript/jquery.min.js")'></script>
+<script src='@routes.Assets.at("javascript/bootstrap.min.js")'></script>
+<!-- Specific page JavaScript
+================================================== -->
+@scripts
+
+</body>
+</html>

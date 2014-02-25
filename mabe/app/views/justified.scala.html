@@ -1,0 +1,34 @@
+@(categories:Seq[String], posts:Seq[models.Post], cat:String = "")
+
+@import views.Helpers._
+
+@styles = {
+<link rel='stylesheet' media='screen' href='@routes.Assets.at("stylesheets/justified-nav.css")'>
+}
+
+@main(play.api.Play.current.configuration.getString("site.name").getOrElse(""), styles){
+
+<div class="container">
+
+    @justified_masthead(categories, cat)
+
+    @include("jumbotron.html")
+
+    <!-- Row of columns -->
+    <div class="row">
+        @posts.take(3).map{post =>
+        <div class="col-lg-4">
+            <h2>@post.property("title")</h2>
+            @if(post.properties.hasPath("summary")) {
+                <p>@views.Helpers.markdown(post.properties.getString("summary"))</p>
+            }
+            <p><a class="btn btn-primary" href="/@post.slug" role="button">View details &raquo;</a></p>
+        </div>
+        }
+    </div><!--/row-->
+
+    @include("footer.html")
+
+</div> <!-- /container -->
+
+}

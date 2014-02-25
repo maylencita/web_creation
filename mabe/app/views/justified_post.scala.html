@@ -1,0 +1,23 @@
+@(categories:Seq[String], post: models.Post, content: Html)
+
+@import views.Helpers._
+
+@styles = {
+<link rel='stylesheet' media='screen' href='@routes.Assets.at("stylesheets/justified-nav.css")'>
+}
+
+@main(post.property("title").getOrElse(""), styles){
+
+<div class="container">
+
+    @justified_masthead(categories, post.property("category").getOrElse(""))
+
+    <h1>@post.property("title")</h1>
+
+    @content
+
+    @include("footer.html")
+
+</div> <!-- /container -->
+
+}

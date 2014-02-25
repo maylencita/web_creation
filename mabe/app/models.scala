@@ -14,11 +14,18 @@ case class Post(slug: String, properties: Config) {
    * Return the post’s date as a `java.util.Date`; `date` is not a required post property,
    * so default to today’s date.
    */
-  def date: Date = {
-    property("date").map { date =>
-      DateTimeFormat.forPattern("YYYY-MM-dd").parseLocalDate(date).toDate
-    }.getOrElse(new LocalDate().toDate)
+  def date(dateFormat:String): Date = {
+    if(properties.hasPath("date")){
+      val date = properties.getAnyRef("date")
+      DateTimeFormat.forPattern(dateFormat).parseLocalDate(date.toString).toDate
+    }else{
+      new LocalDate().toDate
+    }
   }
+
+  def isListed:Boolean =
+    (!properties.hasPath("listed") || properties.getBoolean("listed"))
+
 
   /**
    * Wrapper for getting a property that avoids the need to check for defined properties,

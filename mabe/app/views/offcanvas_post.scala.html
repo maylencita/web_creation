@@ -1,0 +1,25 @@
+@(categories:Seq[String], post: models.Post, content: Html)
+
+@import views.Helpers._
+
+@styles = {
+<link rel='stylesheet' media='screen' href='@routes.Assets.at("stylesheets/offcanvas.css")'>
+}
+
+@main(post.property("title").getOrElse(""), styles){
+
+@offcanvas_navbar(categories, post.property("category").getOrElse(""))
+
+<div class="container">
+
+    <h1>@post.property("title")</h1>
+
+    @content
+
+    <hr>
+
+    @include("footer.html")
+
+</div><!--/.container-->
+
+}

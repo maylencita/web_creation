@@ -1,0 +1,42 @@
+@(categories:Seq[String], post: models.Post, content: Html)
+
+@import views.Helpers._
+
+@styles = {
+<link rel='stylesheet' media='screen' href='@routes.Assets.at("stylesheets/blog.css")'>
+}
+
+@main(post.property("title").getOrElse(""), styles){
+
+@blog_masthead(categories, post.property("category").getOrElse(""))
+
+<div class="container">
+
+    @include("header.html")
+
+    <div class="row">
+
+        <div class="col-sm-8 blog-main">
+
+            <div class="blog-post">
+                <h2 class="blog-post-title">@post.property("title")</h2>
+                <p class="blog-post-meta">@post.property("date") by <a href="#">@post.property("author")</a></p>
+                @content
+            </div><!--/.blog-post-->
+
+            <ul class="pager">
+                <li><a href="#">Previous</a></li>
+                <li><a href="#">Next</a></li>
+            </ul>
+
+        </div><!-- /.blog-main -->
+
+        @blog_sidebar()
+
+    </div><!-- /.row -->
+
+</div><!-- /.container -->
+
+@include("blog_footer.html")
+
+}

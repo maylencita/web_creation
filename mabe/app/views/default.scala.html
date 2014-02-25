@@ -1,0 +1,33 @@
+@(categories:Seq[String], posts:Seq[models.Post], cat:String = "")(implicit request: play.api.mvc.RequestHeader)
+
+@import views.Helpers._
+
+
+@styles = {
+<link rel='stylesheet' media='screen' href='@routes.Assets.at("stylesheets/default.css")'>
+}
+
+@main(play.api.Play.current.configuration.getString("site-title").getOrElse(""), styles){
+    @if(request.path != "/") {
+    <nav>
+        <a href="@routes.Application.index">Home</a>
+    </nav>
+    }
+
+    @include("header.html")
+
+    <section class="content">
+        @for(post <- posts) {
+        <h2>
+            <a href="@routes.Application.post(post.slug)">@post.property("title")</a>
+            <span class="date">@post.property("date")</span>
+        </h2>
+            @if(post.properties.hasPath("summary")) {
+                @views.Helpers.markdown(post.properties.getString("summary"))
+            }
+        }
+    </section>
+
+    @include("footer.html")
+}
+
